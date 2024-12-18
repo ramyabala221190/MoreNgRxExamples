@@ -19,36 +19,37 @@ export const todosReducer=createReducer(
     on(ToDoApiActions.loadingToDosSuccess,(state,effectResult)=>{
         return {
             ...state,
-           todos:effectResult.todoList,
-           error:""
+           todos:effectResult.todoList, // update the ToDo items in the table
+           error:"" //any existing error messages will be removed
         }
         
     }),
     on(ToDoApiActions.loadingToDosFailed,(state,effectResult)=>{
         return {
             ...state,
-            todos:[],
-            error:effectResult.message
-        }
+            todos:[], // loading failed. No ToDo items will be displayed in the table
+            error:effectResult.message //display the error message
+        } 
     }),
     on(ToDoApiActions.updatingToDosFailed, ToDoApiActions.deletingToDosFailed,(state,effectResult)=>{
         return {
-            ...state,
-            error:effectResult.message
+            ...state, //update has failed. so the table remains unchanged
+            error:effectResult.message //display only the error message
         }
     }),
     on(ToDoApiActions.updatingToDosSuccess,(state,effectsResult)=>{
         return {
             ...state,
-            todos: state.todos.map(todo=> todo.id == effectsResult.updatedToDo.id ? effectsResult.updatedToDo: todo),
-            error:""
+            todos: state.todos.map(todo=> todo.id == effectsResult.updatedToDo.id ? effectsResult.updatedToDo: todo), 
+            // update the old item with the updated one
+            error:"" //remove any error messages
         }
     }),
     on(ToDoApiActions.deletingToDosSuccess,(state,effectsResult)=>{
         return {
             ...state,
-            todos: state.todos.filter(todo=>todo.id !== effectsResult.todoIndex),
-            error:""
+            todos: state.todos.filter(todo=>todo.id !== effectsResult.todoIndex), //remove the todo item from the table
+            error:"" //remove any error messages
         }
     })
 

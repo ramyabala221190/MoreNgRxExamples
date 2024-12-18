@@ -8,11 +8,13 @@ export const usersListSelector=createSelector(
     (state)=>state.users
 )
 
+//extracts the id of the selected user
 export const currentUserSelector=createSelector(
     userFeatureSelector,
     (state)=>state?.selectedUser?.id || 0
 )
 
+//extracts the error
 export const userErrorSelector=createSelector(
     userFeatureSelector,
     (state)=>state.error

@@ -14,12 +14,12 @@ export class UsersEffect {
   constructor(private actions$:Actions,private usersService:UsersService) { }
 
   ngrxOnInitEffects(){
-    return UserApiActions.loadUsers();
+    return UserApiActions.loadUsers(); ///dispatches action to populate the dropdown
   }
 
   loadUsersEffect$=createEffect(()=>{
     return this.actions$.pipe(
-      ofType(UserApiActions.loadUsers),
+      ofType(UserApiActions.loadUsers), //handles only UserApiActions.loadUsers
       mergeMap(()=>{
         return this.usersService.fetchUsers().pipe(
           map((result:UserModel[])=>{return UserApiActions.loadUsersSuccess({usersData:result})}),

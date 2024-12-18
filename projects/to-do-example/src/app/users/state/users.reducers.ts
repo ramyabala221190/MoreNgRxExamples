@@ -22,23 +22,23 @@ export const userReducer=createReducer(
     on(UserApiActions.loadUsersSuccess,(state,effectResult)=>{
         return {
             ...state,
-            users:effectResult.usersData,
-            selectedUser:state.selectedUser,
-            error:""
+            users:effectResult.usersData, //populates the dropdown with the 10 user's names
+            selectedUser:state.selectedUser, // sets any previously selected user or its null
+            error:"" //clears any error messages
         }
     }),
     on(UserApiActions.loadUsersFailed,(state,effectsResult)=>{
       return {
         ...state,
-        users:[],
-        error:effectsResult.errorMessage,
-        selectedUser:null
+        users:[], //loading failed. The dropdown will be empty
+        error:effectsResult.errorMessage, // show error message
+        selectedUser:null //no selected user
       }
     }),
     on(UserPageActions.setSelectedUser,(state,props)=>{
         return {
             ...state,
-            selectedUser:state.users.find(user=>user.id == props.userId) || null
+            selectedUser:state.users.find(user=>user.id == props.userId) || null // update the selected user
         }
     })
 )

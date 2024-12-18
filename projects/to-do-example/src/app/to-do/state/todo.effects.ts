@@ -14,17 +14,17 @@ export class ToDoEffects {
   constructor(private actions$:Actions,private todoService:ToDoService) { }
 
   ngrxOnInitEffects(){
-    return ToDoApiActions.loadToDos();
+    return ToDoApiActions.loadToDos(); //dispatches an action to load the ToDo items in the table
   }
 
   loadToDos$=createEffect(()=>{
     return this.actions$.pipe( //listens to all action types
-      ofType(ToDoApiActions.loadToDos), //filtering based on the action type dispatched by the component
+      ofType(ToDoApiActions.loadToDos), // handles only ToDoApiActions.loadToDos
       mergeMap(()=>{
-        //execute the api call
+        //execute the api call 
          return this.todoService.fetchToDos().pipe(
-          map((result:ToDoModel[])=>ToDoApiActions.loadingToDosSuccess({todoList:result})),
-          catchError((err:HttpErrorResponse)=>of(ToDoApiActions.loadingToDosFailed({message:err.statusText})))
+          map((result:ToDoModel[])=>ToDoApiActions.loadingToDosSuccess({todoList:result})), //dispatches an action in case of success
+          catchError((err:HttpErrorResponse)=>of(ToDoApiActions.loadingToDosFailed({message:err.statusText}))) //dispatches action in case of error
          )
       })
     )
@@ -32,7 +32,7 @@ export class ToDoEffects {
 
   updateToDos$=createEffect(()=>{
     return this.actions$.pipe(
-      ofType(ToDoTabActions.updateToDo),
+      ofType(ToDoTabActions.updateToDo), //handles only ToDoTabActions.updateToDo
       mergeMap((state)=>{
         return this.todoService.updateToDo(state.updatedToDo,state.todoIndex).pipe(
           map(()=>ToDoApiActions.updatingToDosSuccess({updatedToDo:state.updatedToDo})),
@@ -45,7 +45,7 @@ export class ToDoEffects {
 
   deleteToDos$=createEffect(()=>{
     return this.actions$.pipe(
-      ofType(ToDoTabActions.deleteToDo),
+      ofType(ToDoTabActions.deleteToDo), //handles only ToDoTabActions.deleteToDo
       mergeMap((state)=>{
         return this.todoService.deleteToDo(state.todoIndex).pipe(
           map(()=>ToDoApiActions.deletingToDosSuccess({todoIndex:state.todoIndex})),
