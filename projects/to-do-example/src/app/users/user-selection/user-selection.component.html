@@ -1,0 +1,11 @@
+
+<h4>Select the User</h4>
+
+<p class="error">{{errors$|async}}</p>
+
+    <select (change)="selectUser()" class="form-select" name="selectedUser" [(ngModel)]="selectedUserId">
+            <option value="0">Select A User</option>
+            <option *ngFor="let user of usersList$|async" [value]="user.id">
+               {{user.name}}
+            </option>      
+    </select>

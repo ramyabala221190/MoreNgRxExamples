@@ -2,9 +2,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
-import { FormsModule } from '@angular/forms';
-import { stateSliceKey, counterReducer } from './state/counter.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { AppData } from './services/app-data';
+
 
 @NgModule({
   declarations: [
@@ -13,9 +16,10 @@ import { stateSliceKey, counterReducer } from './state/counter.reducer';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
-    StoreModule.forRoot({[stateSliceKey]:counterReducer})
-    //StoreModule.forRoot({})
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(AppData),
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

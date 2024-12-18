@@ -1,0 +1,30 @@
+<p class="error">{{error$|async}}</p>
+
+    <table class="table table-bordered" *ngIf="todoFormGroup" [formGroup]="todoFormGroup">
+      <thead>
+        <tr>
+          <th>Index</th>
+          <th>Title</th>
+          <th>Completed Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody formArrayName="todoList">
+        <ng-container *ngFor="let todoControl of todoListItems.controls;let i=index">
+          <tr [formGroupName]="i">
+            <td>{{todoControl?.get('id')?.value}}</td>
+            <td><textarea class="form-control" rows="2" formControlName="title"></textarea></td>
+            <td>
+              <select class="form-select" formControlName="completed">
+                <option *ngFor="let option of completedOptions" [value]="option">{{option}}</option>
+              </select>
+            </td>
+            <td>
+              <button class="btn btn-primary" (click)="updateToDo(i)">Update</button><button class="btn btn-danger" (click)="deleteToDo(i)">Delete</button>
+            </td>
+          </tr>
+        </ng-container>
+        
+      </tbody>
+    </table>
+  
