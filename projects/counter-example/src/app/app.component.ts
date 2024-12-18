@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Store, createFeatureSelector } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {decrementCounterAction, incrementCounterAction, resetCounterAction } from './state/counter.actions';
-import { CountState, stateSliceKey } from './state/counter.reducer';
+import { counterSelector } from './state/counter.selectors';
 
 @Component({
   selector: 'app-root',
@@ -15,12 +15,12 @@ export class AppComponent {
   currentCount$?:Observable<number>;
   incrementBy:number=1;
 
-  constructor(private store:Store<CountState>){
+  constructor(private store:Store<{[stateSliceKey:string]:number}>){
     // this.store.subscribe((result)=>{
     //   //just logged to see how the entire state look like
     //   console.log("Entire State:", JSON.stringify(result))
     // })
-    this.currentCount$=this.store.select(stateSliceKey);
+    this.currentCount$=this.store.select(counterSelector);
   }
 
   incrementCounter(){

@@ -5,10 +5,6 @@ let initialState:number=0;
 
 export const stateSliceKey:string="myCountState";
 
-export interface CountState{
-    [stateSliceKey:string]:number
-}
-
 
 export const counterReducer=createReducer(
     initialState,

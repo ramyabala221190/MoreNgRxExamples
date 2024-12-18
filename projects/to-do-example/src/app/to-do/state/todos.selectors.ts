@@ -18,14 +18,6 @@ export const todoListSelector=createSelector(
     }
 ) 
 
-export const selectedUserSelector=createSelector(
-  usersListSelector,
-  currentUserSelector,
-  (users:UserModel[],userId:number)=>{
-    if(userId !== 0) {return users.find(user=>user.id == userId) || null} else {return null}
-  }
-)
-
 export const todoErrorSelector=createSelector(
   todoFeatureSelector,
   (state)=>state.error
